@@ -7,20 +7,29 @@ from functools import wraps
 logger = logging.getLogger('logit')
 
 
+def loggerit(func, flag, content):
+    logger.debug('func=%s&flag=%s&content=%s', func, flag, content)
+
+
 def logit(func):
     @wraps(func)
     def with_logging(request, *args, **kwargs):
-        logger.debug(func.__name__)
+        # 获取函数名
+        name = func.__name__
+        # 打印 body 内容到日志文件
         try:
-            logger.debug(request.body)
+            loggerit(name, 'body', request.body)
         except Exception as e:
-            logger.debug(e.message)
-        logger.debug(request.GET)
-        logger.debug(request.POST)
-        resp = func(request, *args, **kwargs)
+            loggerit(name, 'error', e.message)
+        # 打印 get 内容到日志文件
+        loggerit(name, 'get', request.GET)
+        # 打印 POST 内容到日志文件
+        loggerit(name, 'post', request.POST)
+        res = func(request, *args, **kwargs)
+        # 打印 response 内容到日志文件
         try:
-            logger.debug(resp.content)
+            loggerit(name, 'res', res.content)
         except Exception as e:
-            logger.debug(e.message)
-        return resp
+            loggerit(name, 'error', e.message)
+        return res
     return with_logging
