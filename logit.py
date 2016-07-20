@@ -17,5 +17,10 @@ def logit(func):
             logger.debug(e.message)
         logger.debug(request.GET)
         logger.debug(request.POST)
-        return func(request, *args, **kwargs)
+        resp = func(request, *args, **kwargs)
+        try:
+            logger.debug(resp.content)
+        except Exception as e:
+            logger.debug(e.message)
+        return resp
     return with_logging
