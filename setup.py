@@ -11,7 +11,7 @@ setup(
     name='django-logit',
     version=version,
     keywords='django-logit',
-    description='Django Decorator of Logging Request Params',
+    description='Django Decorator of Logging Request Params/Response Content',
     long_description=open('README.rst').read(),
 
     url='https://github.com/Brightcells/django-logit',
