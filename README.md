@@ -13,6 +13,10 @@ from logit import logit
 @logit
 def xxx(request):
     xxx
+
+@logit(body=True, res=True)
+def ooo(request):
+    xxx
 ```
 
 ## Settings.py
