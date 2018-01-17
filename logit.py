@@ -48,7 +48,9 @@ def logit(func=None, body=False, res=False):
                     except Exception as e:
                         loggerit(name, 'error', e.message)
 
-            return response
+                return response
+
+            return func(request, *args, **kwargs)
 
         return with_logging
 
