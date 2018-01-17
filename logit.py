@@ -3,6 +3,8 @@
 import logging
 from functools import wraps
 
+from django.conf import settings
+
 
 logger = logging.getLogger('logit')
 
@@ -18,31 +20,33 @@ def logit(func=None, body=False, res=False):
             # Get Func Name
             name = func.__name__
 
-            # Body Content Section
-            if body:
-                try:
-                    loggerit(name, 'body', request.body)
-                except Exception as e:
-                    loggerit(name, 'error', e.message)
+            if hasattr(settings, 'DJANGO_LOGIT_ENABLED') and settings.DJANGO_LOGIT_ENABLED:
 
-            # Get Content Section
-            rgets = request.GET
-            if rgets:
-                loggerit(name, 'get', request.GET)
+                # Body Content Section
+                if body:
+                    try:
+                        loggerit(name, 'body', request.body)
+                    except Exception as e:
+                        loggerit(name, 'error', e.message)
 
-            # POST Content Section
-            rposts = request.POST
-            if rposts:
-                loggerit(name, 'post', request.POST)
+                # Get Content Section
+                rgets = request.GET
+                if rgets:
+                    loggerit(name, 'get', request.GET)
 
-            response = func(request, *args, **kwargs)
+                # POST Content Section
+                rposts = request.POST
+                if rposts:
+                    loggerit(name, 'post', request.POST)
 
-            # Response Content Section
-            if res:
-                try:
-                    loggerit(name, 'res', response.content)
-                except Exception as e:
-                    loggerit(name, 'error', e.message)
+                response = func(request, *args, **kwargs)
+
+                # Response Content Section
+                if res:
+                    try:
+                        loggerit(name, 'res', response.content)
+                    except Exception as e:
+                        loggerit(name, 'error', e.message)
 
             return response
 
