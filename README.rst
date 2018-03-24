@@ -17,7 +17,7 @@ Usage
 
 ::
 
-    from logit import logit
+    from django_logit import logit
 
     @logit
     def xxx(request):

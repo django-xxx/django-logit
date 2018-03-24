@@ -10,7 +10,7 @@ version = '1.0.8'
 setup(
     name='django-logit',
     version=version,
-    keywords='django-logit',
+    keywords='Django Logging Log POST GET Query Params',
     description='Django Decorator of Logging Request Params/Response Content',
     long_description=open('README.rst').read(),
 
@@ -20,7 +20,7 @@ setup(
     author_email='kimi.huang@brightcells.com',
 
     packages=[],
-    py_modules=['logit', ],
+    py_modules=['django_logit'],
     install_requires=[],
 
     classifiers=[
