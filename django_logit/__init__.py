@@ -1,3 +1,3 @@
 # -*- coding: utf-8 -*-
 
-from django_logit.logit import logit
+from django_logit.djlogit import logit
