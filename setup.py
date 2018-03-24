@@ -19,8 +19,8 @@ setup(
     author='Hackathon',
     author_email='kimi.huang@brightcells.com',
 
-    packages=[],
-    py_modules=['django_logit'],
+    packages=['django_logit'],
+    py_modules=[],
     install_requires=[],
 
     classifiers=[
