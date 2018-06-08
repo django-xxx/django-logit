@@ -13,7 +13,7 @@ def loggerit(func, flag, content):
     logger.debug('func=%s&flag=%s&content=%s', func, flag, content)
 
 
-def logit(func=None, body=False, res=False):
+def logit(func=None, body=False, res=False, session=False, cookie=False):
     def decorator(func):
         @wraps(func)
         def with_logging(request, *args, **kwargs):
@@ -38,6 +38,18 @@ def logit(func=None, body=False, res=False):
                 rposts = request.POST
                 if rposts:
                     loggerit(name, 'post', request.POST)
+
+                # Session Content Section
+                if session:
+                    session_items = request.session.items()
+                    if session_items:
+                        loggerit(name, 'session', session_items)
+
+                # Cookie Content Section
+                if cookie:
+                    cookies = request.COOKIES
+                    if cookies:
+                        loggerit(name, 'cookie', cookies)
 
                 response = func(request, *args, **kwargs)
 
